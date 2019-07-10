@@ -1,6 +1,10 @@
+import { Room } from "./Room";
+
 export class RoomGenerator{
 
 	constructor(){}
 
-	public buildRoom
+	public static buildRoom(): void{
+
+	}
 }

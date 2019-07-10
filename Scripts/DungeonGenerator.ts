@@ -2,6 +2,7 @@ import { DungeonParms} from "./DungeonParms";
 import { RoomGenerator } from "./RoomGenerator";
 import { GapGenerator } from "./GapGenerator";
 import { EncounterGenerator } from "./EncounterGenerator";
+import { Room } from "./Room";
 
 class DungeonGenerator extends RoomGenerator{
 	private _parameters: DungeonParms;
@@ -56,12 +57,18 @@ class DungeonGenerator extends RoomGenerator{
 	}
 
 	private populateDungeonRooms(dungeon: string[][]): string[][] {
+		let roomCount: number = this.calculateRoomCount();
 
+		for (let i = 0; i < roomCount; i ++){
+
+			let newRoom = this.generateRoom();
+
+		}
 		return null;
 	}
 
 	private populateArenaRoom(dungeon: string[][]): string[][] {
-
+		let roomCount: number = this.calculateRoomCount();
 		return null;
 	}
 
@@ -78,6 +85,21 @@ class DungeonGenerator extends RoomGenerator{
 	private populateEncounters(duneon: string[][], encounterDensity: number) {
 
 		return null;
+	}
+
+	// May need to update logic later
+	private calculateRoomCount(): number {
+		return Math.floor((this.parameters.length * this.parameters.width) / 10);
+	}
+
+	private generateRoom(): Room {
+
+		let height: number = Math.random() * this.parameters.width;
+		let width: number = Math.random() * this.parameters.length;
+		let westMost: number = Math.random() * ;
+		let southMost: number = Math.random() * height - ;
+
+		return new Room(, , width, height);
 	}
 
 }
