@@ -1,4 +1,4 @@
-import { DungeonParms } from "./DungeonParms";
+import { DungeonParms} from "./DungeonParms";
 import { RoomGenerator } from "./RoomGenerator";
 import { GapGenerator } from "./GapGenerator";
 import { EncounterGenerator } from "./EncounterGenerator";
