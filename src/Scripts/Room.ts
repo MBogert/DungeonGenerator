@@ -26,8 +26,12 @@ export class Room {
 
 	// Getters
 	public get length(): number {return this._length;}
-	public get width(): number {return this.width;}
+	public get width(): number {return this._width;}
+
 	public get center(): [number, number] {return this._center;}
+	public get centerXCoordinate(): number {return this._center[0];}
+	public get centerYCoordinate(): number {return this._center[1];}
+
 	public get westCoordinate(): number {return this._W;}
 	public get eastCoordinate(): number {return this._E;}
 	public get southCoordinate(): number {return this._S;}
