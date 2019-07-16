@@ -65,20 +65,20 @@ export class DungeonGenerator extends RoomGenerator{
 	public populateDungeonRooms(dungeon: string[][]): string[][] {
 		let roomCount: number = this.calculateRoomCount();
 		let prevRoom: Room = null;
-		console.log("Adding " + roomCount + " Rooms");
+
 		for (let i = 0; i < roomCount; i ++){
 
-			let newRoom = this.generateRoom(this.parameters);
-			dungeon = this.fillDungeonWithRoom(dungeon, newRoom);
+			let newRoom = DungeonGenerator.generateRoom(this.parameters);
+			dungeon = DungeonGenerator.fillDungeonWithRoom(dungeon, newRoom);
 			this.addRoom(newRoom);
 
 			if(prevRoom != null){
-				this.connectRooms(dungeon, newRoom, prevRoom);
+				dungeon = DungeonGenerator.connectRooms(dungeon, newRoom, prevRoom);
 			}
 			prevRoom = newRoom; // Potential issue?
 			
 		}
-		console.log("Rooms added");
+
 		return dungeon;
 	}
 
@@ -102,64 +102,62 @@ export class DungeonGenerator extends RoomGenerator{
 		return Math.floor((this.parameters.length * this.parameters.width) / 10);
 	}
 
-	public generateRoom(parameters: DungeonParms): Room {
+	public static generateRoom(parameters: DungeonParms): Room {
 
-		let width: number = Math.random() * parameters.width;
-		let length: number = Math.random() * parameters.length;
-		let westMost: number = Math.random() * (parameters.length - length);
-		let northMost: number = Math.random() * (parameters.width - width);
+		let width: number = Math.floor(Math.random() * parameters.width);
+		let length: number = Math.floor(Math.random() * parameters.length);
+		let westMost: number = Math.floor(Math.random() * (parameters.length - length));
+		let northMost: number = Math.floor(Math.random() * (parameters.width - width));
 
-		console.log("One Room Built");
 		return new Room(westMost, northMost, length, width);
 	}
 
-	public fillDungeonWithRoom(dungeon: string[][], room: Room): string[][] {
+	public static fillDungeonWithRoom(dungeon: string[][], room: Room): string[][] {
 
-		console.log("Starting Fill");
-		for(let i = room.southCoordinate; i <= room.width; i ++){
-			console.log("Row");
-			for(let j = room.westCoordinate; j <= room.length; j++){
-				console.log("Column");
-				console.log(typeof dungeon[i][j]);
+		for(let i = room.northCoordinate; i <= room.width + room.northCoordinate; i ++){
+			for(let j = room.westCoordinate; j <= room.length + room.westCoordinate; j++){
 				dungeon[i][j] = 'R';
 			}
 		}
-		console.log("Room added to Dungeon");
+
 		return dungeon;
 	}
 
-	public buildHorizontalCorridor(dungeon: string[][], x1: number, x2: number, yAxis: number): void {
+	public static buildHorizontalCorridor(dungeon: string[][], x1: number, x2: number, yAxis: number): string[][] {
 		for(let i = x1; i <= x2; i ++){
 			dungeon[yAxis][i] = "R";
 		}
+		return dungeon;
 	}
 
-	public buildVerticalCorridor(dungeon: string[][], y1: number, y2: number, xAxis: number): void {
+	public static buildVerticalCorridor(dungeon: string[][], y1: number, y2: number, xAxis: number): string[][] {
 		for(let i = y1; i <= y2; i ++){
 			dungeon[i][xAxis] = "R";
-		}		
+		}	
+		return dungeon;	
 	}
 
-	public connectRooms(dungeon: string[][], room1: Room, room2: Room): void{
+	public static connectRooms(dungeon: string[][], room1: Room, room2: Room): string[][]{
 
-		let horizontalParameters: [number, number, number] = this.getHorizontalCorridorConstructionCoordinates(room1, room2);
-		let verticalParameters: [number, number, number] = this.getVerticalCorridorConstructionCoordinates(room1, room2);
+		let horizontalParameters: [number, number, number] = DungeonGenerator.getHorizontalCorridorConstructionCoordinates(room1, room2);
+		let verticalParameters: [number, number, number] = DungeonGenerator.getVerticalCorridorConstructionCoordinates(room1, room2);
 
 		if(Math.random() > 0.5){ // Start with Vertical Corridor
 
-			this.buildVerticalCorridor(dungeon, verticalParameters[0], verticalParameters[1], verticalParameters[2]);
-			this.buildHorizontalCorridor(dungeon, horizontalParameters[0], horizontalParameters[1], horizontalParameters[2]);
+			dungeon = DungeonGenerator.buildVerticalCorridor(dungeon, verticalParameters[0], verticalParameters[1], verticalParameters[2]);
+			dungeon = DungeonGenerator.buildHorizontalCorridor(dungeon, horizontalParameters[0], horizontalParameters[1], horizontalParameters[2]);
 
 		}else{ // Start with Horizontal Corridor
 
-			this.buildHorizontalCorridor(dungeon, horizontalParameters[0], horizontalParameters[1], horizontalParameters[2]);
-			this.buildVerticalCorridor(dungeon, verticalParameters[0], verticalParameters[1], verticalParameters[2]);
+			dungeon = DungeonGenerator.buildHorizontalCorridor(dungeon, horizontalParameters[0], horizontalParameters[1], horizontalParameters[2]);
+			dungeon = DungeonGenerator.buildVerticalCorridor(dungeon, verticalParameters[0], verticalParameters[1], verticalParameters[2]);
 
 		}
 
+		return dungeon;
 	}
 
-	public getHorizontalCorridorConstructionCoordinates(room1: Room, room2: Room): [number, number, number] {
+	public static getHorizontalCorridorConstructionCoordinates(room1: Room, room2: Room): [number, number, number] {
 
 		let coordinates: [number, number, number] = [-1, -1, -1];
 
@@ -180,7 +178,7 @@ export class DungeonGenerator extends RoomGenerator{
 		return coordinates;
 	}
 
-	public getVerticalCorridorConstructionCoordinates(room1: Room, room2: Room): [number, number, number] {
+	public static getVerticalCorridorConstructionCoordinates(room1: Room, room2: Room): [number, number, number] {
 
 		let coordinates: [number, number, number] = [-1, -1, -1];
 
