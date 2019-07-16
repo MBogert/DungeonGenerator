@@ -12,14 +12,14 @@ export class Room {
 	// Center Point
 	private _center: [number, number];
 
-	constructor(leftMost: number, bottomMost: number, length: number, width: number) {
+	constructor(leftMost: number, topMost: number, length: number, width: number) {
 		this._length = length;
 		this._width = width;
 
 		this._W = leftMost;
 		this._E = leftMost + length;
-		this._S = bottomMost;
-		this._N = bottomMost + width;
+		this._S = topMost + width;
+		this._N = topMost;
 
 		this._center = [Math.floor((this._W + this._E) / 2), Math.floor((this._S + this._N) / 2)];
 	}

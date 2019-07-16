@@ -19,7 +19,7 @@ export class DungeonParms {
 	public get length(): number {return this._length;}
 	public get width(): number {return this._width;}
 	public get arena(): boolean {return this._arena;}
-	public get type(): string {return this._type}
+	// public get type(): string {return this._type} Pending support for dungeon types
 	public get encounterDensity(): number {return this._encounterDensity}
 	public get gapDensity(): number {return this._gapDensity;}
 

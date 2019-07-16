@@ -5,8 +5,8 @@ import { EncounterGenerator } from "./EncounterGenerator";
 import { Room } from "./Room";
 
 export class DungeonGenerator extends RoomGenerator{
-	private _parameters: DungeonParms;
-	private _rooms: Room[];
+	public _parameters: DungeonParms;
+	public _rooms: Room[];
 
 	constructor(params: DungeonParms){
 		super();
@@ -15,9 +15,9 @@ export class DungeonGenerator extends RoomGenerator{
 	}
 
 	public get parameters(): DungeonParms{return this._parameters;}
-	private get rooms(): Room[]{return this._rooms;}
+	public get rooms(): Room[]{return this._rooms;}
 
-	private addRoom(newRoom: Room): void {
+	public addRoom(newRoom: Room): void {
 		this._rooms.push(newRoom);
 	} 
 
@@ -30,9 +30,9 @@ export class DungeonGenerator extends RoomGenerator{
 		}
 	}
 
-	private buildDungeon(parameters: DungeonParms): string[][] {
+	public buildDungeon(parameters: DungeonParms): string[][] {
 
-		let initialDungeon: string[][] = this.buildEmptyDungeon(parameters.length, parameters.width);
+		let initialDungeon: string[][] = DungeonGenerator.buildEmptyDungeon(parameters.length, parameters.width);
 		let roomDungeon: string[][] = this.populateDungeonRooms(initialDungeon);
 		let gapDungeon: string[][] = this.populateGaps(roomDungeon, parameters.gapDensity);
 		let populateEncounters: string[][] = this.populateEncounters(gapDungeon, parameters.encounterDensity);
@@ -40,9 +40,9 @@ export class DungeonGenerator extends RoomGenerator{
 		return populateEncounters;
 	}
 
-	private buildArena(parameters: DungeonParms): string[][] {
+	public buildArena(parameters: DungeonParms): string[][] {
 
-		let initialDungeon: string[][] = this.buildEmptyDungeon(parameters.length, parameters.width);
+		let initialDungeon: string[][] = DungeonGenerator.buildEmptyDungeon(parameters.length, parameters.width);
 		let roomDungeon: string[][] = this.populateArenaRoom(initialDungeon);
 		let gapDungeon: string[][] = this.populateGaps(roomDungeon, parameters.gapDensity);
 		let populateEncounters: string[][] = this.populateEncounters(gapDungeon, parameters.encounterDensity);
@@ -50,7 +50,7 @@ export class DungeonGenerator extends RoomGenerator{
 		return populateEncounters;
 	}
 
-	private buildEmptyDungeon(length: number, width: number): string[][] {
+	public static buildEmptyDungeon(length: number, width: number): string[][] {
 		
 		let newDungeon: string[][] = [];
 		for(let i = 0; i < length; i ++){
@@ -62,13 +62,13 @@ export class DungeonGenerator extends RoomGenerator{
 		return newDungeon;
 	}
 
-	private populateDungeonRooms(dungeon: string[][]): string[][] {
+	public populateDungeonRooms(dungeon: string[][]): string[][] {
 		let roomCount: number = this.calculateRoomCount();
 		let prevRoom: Room = null;
 		console.log("Adding " + roomCount + " Rooms");
 		for (let i = 0; i < roomCount; i ++){
 
-			let newRoom = this.generateRoom();
+			let newRoom = this.generateRoom(this.parameters);
 			dungeon = this.fillDungeonWithRoom(dungeon, newRoom);
 			this.addRoom(newRoom);
 
@@ -82,38 +82,38 @@ export class DungeonGenerator extends RoomGenerator{
 		return dungeon;
 	}
 
-	private populateArenaRoom(dungeon: string[][]): string[][] {
+	public populateArenaRoom(dungeon: string[][]): string[][] {
 		let roomCount: number = this.calculateRoomCount();
 		return dungeon;
 	}
 
-	private populateGaps(dungeon: string[][], gapDensity: number): string[][] {
+	public populateGaps(dungeon: string[][], gapDensity: number): string[][] {
 
 		return dungeon;
 	}
 
-	private populateEncounters(dungeon: string[][], encounterDensity: number) {
+	public populateEncounters(dungeon: string[][], encounterDensity: number) {
 
 		return dungeon;
 	}
 
 	// May need to update logic later
-	private calculateRoomCount(): number {
+	public calculateRoomCount(): number {
 		return Math.floor((this.parameters.length * this.parameters.width) / 10);
 	}
 
-	private generateRoom(): Room {
+	public generateRoom(parameters: DungeonParms): Room {
 
-		let width: number = Math.random() * this.parameters.width;
-		let length: number = Math.random() * this.parameters.length;
-		let westMost: number = Math.random() * (this.parameters.length - length);
-		let southMost: number = Math.random() * (this.parameters.width - width);
+		let width: number = Math.random() * parameters.width;
+		let length: number = Math.random() * parameters.length;
+		let westMost: number = Math.random() * (parameters.length - length);
+		let northMost: number = Math.random() * (parameters.width - width);
 
 		console.log("One Room Built");
-		return new Room(westMost, southMost, length, width);
+		return new Room(westMost, northMost, length, width);
 	}
 
-	private fillDungeonWithRoom(dungeon: string[][], room: Room): string[][] {
+	public fillDungeonWithRoom(dungeon: string[][], room: Room): string[][] {
 
 		console.log("Starting Fill");
 		for(let i = room.southCoordinate; i <= room.width; i ++){
@@ -128,19 +128,19 @@ export class DungeonGenerator extends RoomGenerator{
 		return dungeon;
 	}
 
-	private buildHorizontalCorridor(dungeon: string[][], x1: number, x2: number, yAxis: number): void {
+	public buildHorizontalCorridor(dungeon: string[][], x1: number, x2: number, yAxis: number): void {
 		for(let i = x1; i <= x2; i ++){
 			dungeon[yAxis][i] = "R";
 		}
 	}
 
-	private buildVerticalCorridor(dungeon: string[][], y1: number, y2: number, xAxis: number): void {
+	public buildVerticalCorridor(dungeon: string[][], y1: number, y2: number, xAxis: number): void {
 		for(let i = y1; i <= y2; i ++){
 			dungeon[i][xAxis] = "R";
 		}		
 	}
 
-	private connectRooms(dungeon: string[][], room1: Room, room2: Room): void{
+	public connectRooms(dungeon: string[][], room1: Room, room2: Room): void{
 
 		let horizontalParameters: [number, number, number] = this.getHorizontalCorridorConstructionCoordinates(room1, room2);
 		let verticalParameters: [number, number, number] = this.getVerticalCorridorConstructionCoordinates(room1, room2);
@@ -159,7 +159,7 @@ export class DungeonGenerator extends RoomGenerator{
 
 	}
 
-	private getHorizontalCorridorConstructionCoordinates(room1: Room, room2: Room): [number, number, number] {
+	public getHorizontalCorridorConstructionCoordinates(room1: Room, room2: Room): [number, number, number] {
 
 		let coordinates: [number, number, number] = [-1, -1, -1];
 
@@ -180,7 +180,7 @@ export class DungeonGenerator extends RoomGenerator{
 		return coordinates;
 	}
 
-	private getVerticalCorridorConstructionCoordinates(room1: Room, room2: Room): [number, number, number] {
+	public getVerticalCorridorConstructionCoordinates(room1: Room, room2: Room): [number, number, number] {
 
 		let coordinates: [number, number, number] = [-1, -1, -1];
 

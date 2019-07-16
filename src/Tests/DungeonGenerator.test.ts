@@ -2,25 +2,29 @@ import { DungeonGenerator } from '../Scripts/DungeonGenerator';
 import { DungeonParms } from '../Scripts/DungeonParms';
 import { Room } from '../Scripts/Room';
 
-// test('Will this work?', () => {
-// 	expect(Math.max(1,2)).toBe(2);
-// });
+test('Empty Dungeon Generation', () => {
 
-// test('DummyDungeon', () => {
+	let emptyDungeon: string[][] = DungeonGenerator.buildEmptyDungeon(5, 5);
+	for(let i = 0; i < 5; i ++){
+		for(let j = 0; j < 5; j ++){
+			expect(emptyDungeon[i][j]).toBe('W');
+		}
+	}
 
-// 	let parms: DungeonParms = new DungeonParms(10, 10, false, 0, 0);
-// 	let generator: DungeonGenerator = new DungeonGenerator(parms);
-// 	let dungeon: string[][] = generator.generateDungeon();
-
-
-// });
-
-test('RoomLength', () => {
-	let room: Room = new Room(7, 4, 10, 11);
-	expect(room.length).toBe(10);
 });
 
-test('RoomWidth', () => {
-	let room: Room = new Room(7, 4, 10, 11);
-	expect(room.width).toBe(11);
+test('Random Room Creation', () => {
+
+	let testParms = new DungeonParms(10, 20, true, 0.73, 0.52);
+	let gen: DungeonGenerator = new DungeonGenerator(testParms);
+	let randomRoom: Room = DungeonGenerator.generateRoom(testParms);
+
+	expect(Room.length <= testParms.length).toBe(true);
+	expect(Room.width <= testParms.width).toBe(true);
+
+	expect(Room.westCoordinate >= 0 && Room.westCoordinate < (parameters.length - length)).toBe(true);
+	expect(Room.eastCoordinate == (Room.westCordinate + testParms.length)).toBe(true);
+
+	expect(Room.northCoordinate >= 0 && Room.northCoordinate < (parameters.width - width)).toBe(true);
+	expect(Room.southCoordinate == (Room.northCordinate + testParms.width)).toBe(true);
 });

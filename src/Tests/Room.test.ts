@@ -30,11 +30,11 @@ test('East Coordinate', () => {
 });
 
 test('South Coordinate', () => {
-	expect(testRoom.southCoordinate).toBe(4);
+	expect(testRoom.northCoordinate).toBe(4);
 });
 
 test('North Coordinate', () => {
-	expect(testRoom.northCoordinate).toBe(13);
+	expect(testRoom.southCoordinate).toBe(13);
 });
 
 
