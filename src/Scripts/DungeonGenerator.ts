@@ -99,7 +99,7 @@ export class DungeonGenerator extends RoomGenerator{
 
 	// May need to update logic later
 	public calculateRoomCount(): number {
-		return Math.floor((this.parameters.length * this.parameters.width) / 10);
+		return Math.floor(3);
 	}
 
 	public static generateRoom(parameters: DungeonParms): Room {
