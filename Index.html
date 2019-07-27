@@ -2,22 +2,38 @@
 <html>
 
 	<head>
+
 		<link rel="stylesheet" href="Style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script>
+			$(function() {
+				$('#topBorder').load('templates/topBorder.html');
+			});
+			$(function() {
+				$('#dungeonParmContainer').load('templates/dungeonParmContainer.html');
+			});
+			$(function() {
+				$('#generationButtonContainer').load('templates/generationButtonContainer.html');
+			});
+			$(function() {
+				$('#bottomBorder').load('templates/bottomBorder.html');
+			});
+		</script>
+
 	</head>
 
-	<div class="dungeon-form">
 
-		<form class="dungeon-form" id="dimensions"></form>
+	<div class="mainPage">
 
-		<form class="dungeon-form" id="map-type"></form>
+		<div class="topBorder"></div>
 
-		<form class="dungeon-form" id="encounters"></form>
+		<div class="mainContainer">
+			<div class="dungeonParmContainer"></div>
+			<div class="generationButtonContainer"></div>
+		</div>
 
-		<form class="dungeon-form" id="gaps"></form>
-
-		<form class="dungeon-form" id="arenas"></form>
+		<div class="bottomBorder"></div>
 
 	</div>
-
 
 </html>
