@@ -948,6 +948,7 @@
       "resolved": "https://registry.npmjs.org/cssstyle/-/cssstyle-1.2.2.tgz",
       "version": "1.2.2"
     },
+    "csv-writer": "^1.5.0",
     "dashdash": {
       "integrity": "sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=",
       "requires": {
@@ -4396,6 +4397,7 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",
+    "@types/node": "^12.7.4",
     "jest": "^24.8.0",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.3"

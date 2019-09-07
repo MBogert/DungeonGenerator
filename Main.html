@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="Main.css">
+		<script src="./Scripts/CSVRenderer.js"></script>
+		<title>Build-A-Dungeon</title>
+	</head>
+	<body>
+
+		<h1>Generate your own dungeon at random!</h1>
+
+		<form id="parms">
+
+			<h2>Dimensions</h2>
+			<br>
+			<input type="number" min="1" name="length">
+			<input type="number" min="1" name="width">
+			<br>
+
+			<h2>Encounter Density</h2>
+			<br>
+			<input type="range" min="1" max="100" value="50">
+			<br>
+
+			<h2>Gap Density</h2>
+			<br>
+			<input type="range" min="1" max="100" value="50">
+			<br>
+
+			<h2>Submit for creation</h2>
+			<br>
+			<input type="submit">
+			
+		</form>
+
+	</body>
+
+</html>

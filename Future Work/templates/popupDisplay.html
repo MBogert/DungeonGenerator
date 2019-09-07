@@ -1,0 +1,18 @@
+<div class="popupDisplay">
+
+	<img src="../assets/QuestionMark.png"> 
+	<div class="hidden-popup" id="popup-content" onClick="showContent()">
+		<p>
+			Test Text
+		</p>
+		<img>
+	</div>
+
+</div>
+
+<script>
+	function showContent() {
+		var popup = document.getElementByID("popup-content");
+		popup.classList.toggle("show");
+	}
+</script>

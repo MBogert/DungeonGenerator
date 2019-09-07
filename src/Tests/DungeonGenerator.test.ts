@@ -107,12 +107,12 @@ test('Add Room', () => {
 // TODO Finalize test
 test('Dummy Dungeon', () => {
 
-	let parms: DungeonParms = new DungeonParms(10, 10, false, 0.73, 0.52);
+	let parms: DungeonParms = new DungeonParms(50, 50, false, 0.73, 0.52);
 	let generator: DungeonGenerator = new DungeonGenerator(parms);
 	let dungeon: string[][] = generator.generateDungeon();
 
-	for(let i = 0; i < 10; i ++){
-		for(let j = 0; j < 10; j++){
+	for(let i = 0; i < 50; i ++){
+		for(let j = 0; j < 50; j++){
 			console.log(dungeon[i][j]);
 		}
 	}
